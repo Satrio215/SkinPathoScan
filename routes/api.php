@@ -19,7 +19,6 @@ use App\Http\Controllers\ArtikelController;
 
 //Authentication
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 //Artikel
 Route::middleware('auth:api')->group(function () {
@@ -27,5 +26,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/tambah/artikel', [ArtikelController::class, 'store'])->name('artikel.tambah');
     Route::post('/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
     Route::delete('/artikel/delete/{id}', [ArtikelController::class, 'destroy'])->name('artikel.delete');
+    Route::get('/artikels/{id}', [ArtikelController::class, 'show'])->name('artikels.id');
 
+    //Logout
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
