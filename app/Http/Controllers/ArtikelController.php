@@ -75,9 +75,25 @@ class ArtikelController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return response()->json(['error' => 'Unauthenticated.'], 401);
     }
+
+    $artikel = Artikel::where('id', $id)->where('user_id', $user->id)->first();
+
+    if (!$artikel) {
+        return response()->json(['error' => 'Artikel tidak ditemukan atau Anda tidak memiliki akses.'], 404);
+    }
+
+    return response()->json([
+        'message' => 'Data artikel berhasil diambil',
+        'data' => $artikel
+    ], 200);
+}
+
 
     /**
      * Show the form for editing the specified resource.
