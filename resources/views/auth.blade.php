@@ -23,11 +23,14 @@
                 {{-- Logo dan Menu Kiri --}}
                 <div class="flex items-center space-x-6">
                     <a href="{{ route('artikels') }}" class="text-lg font-semibold text-blue-600 hover:text-blue-700">
-                        MyApp
+                        SkinPathoScan
                     </a>
                     <div class="hidden sm:flex space-x-4">
                         {{-- <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-500">Dashboard</a> --}}
-                        <a href="{{ route('artikels') }}" class="text-gray-700 hover:text-blue-500">Artikel</a>
+                        <a href="{{ route('artikels') }}"
+                            class="text-gray-700 hover:text-blue-500 bg-white hover:bg-gray-200 px-3 py-1 rounded-md transform hover:scale-[0.98] transition duration-150">
+                            Artikel
+                        </a>
                         {{-- <a href="{{ route('projeks.index') }}" class="text-gray-700 hover:text-blue-500">Projek</a>
                         <a href="{{ route('artikels.index') }}" class="text-gray-700 hover:text-blue-500">Artikel</a> --}}
                     </div>
@@ -62,7 +65,11 @@
         <div id="mobile-menu" class="sm:hidden hidden px-4 pb-4">
             <div class="space-y-2 mt-2">
                 {{-- <a href="{{ route('dashboard') }}" class="block text-gray-700 hover:text-blue-500">Dashboard</a> --}}
-                <a href="{{ route('artikels') }}"class="block text-gray-700 hover:text-blue-500">Pengalaman</a>
+                <a href="{{ route('artikels') }}"
+                    class="text-gray-700 hover:text-blue-500 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-md transform hover:scale-[0.98] transition duration-150">
+                    Artikel
+                </a>
+
                 {{-- <a href="{{ route('projeks.index') }}" class="block text-gray-700 hover:text-blue-500">Projek</a>
                 <a href="{{ route('artikels.index') }}" class="block text-gray-700 hover:text-blue-500">Artikel</a> --}}
             </div>

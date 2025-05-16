@@ -27,8 +27,6 @@ class ArtikelController extends Controller
     return view('artikels.index', compact('artikels'));
 }
 
-
-
     /**
      * Show the form for creating a new resource.
      */
