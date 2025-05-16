@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const DefaultLayout = ({ children }) => {
     return (
@@ -10,16 +11,21 @@ const DefaultLayout = ({ children }) => {
             </header>
 
             {/* Main content area */}
-            <main className="flex-1 px-4 py-8 md:px-8 bg-blue-600">
-                <div className="max-w-7xl mx-auto w-full">{children}</div>
+
+            <main
+                className="flex-1 px-4 py-8 md:px-8"
+                style={{
+                    background: "linear-gradient(to bottom, #009CE1, #006BA1)",
+                }}
+            >
+                <div className="max-w-7xl mx-auto w-full text-white">
+                    {children}
+                </div>
             </main>
 
             {/* Footer */}
-            <footer className="bg-blue-600 text-white text-center py-4">
-                <div className="max-w-7xl mx-auto">
-                    &copy; {new Date().getFullYear()} SkinPathoScan. All rights
-                    reserved.
-                </div>
+            <footer className=" text-white text-center">
+                <Footer />
             </footer>
         </div>
     );
