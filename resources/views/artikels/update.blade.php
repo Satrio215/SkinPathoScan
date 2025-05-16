@@ -45,8 +45,7 @@
                 @if ($artikel->gambar)
                     <div class="mb-4">
                         <p class="text-sm text-gray-600 mb-1">Gambar Saat Ini:</p>
-                        <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="gambar artikel"
-                            class="w-40 rounded shadow">
+                        <img src="{{ asset($artikel->gambar) }}" alt="gambar artikel" class="w-16 rounded">
                     </div>
                 @endif
 

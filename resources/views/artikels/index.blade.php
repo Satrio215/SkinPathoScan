@@ -61,7 +61,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             @if ($artikel->gambar)
-                                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="gambar artikel"
+                                                <img src="{{ asset($artikel->gambar) }}" alt="gambar artikel"
                                                     class="w-16 rounded">
                                             @else
                                                 <span class="text-gray-400">-</span>

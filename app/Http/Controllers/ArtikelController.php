@@ -52,17 +52,23 @@ class ArtikelController extends Controller
 
     $user = Auth::user();
 
-    $path = $request->file('gambar')->store('artikels', 'public');
+    $gambar = $request->file('gambar');
+    $namaGambar = time() . '_' . $gambar->getClientOriginalName();
+    $path = 'uploads/artikels/' . $namaGambar;
+
+    // Pindahkan file ke folder public/uploads/artikels
+    $gambar->move(public_path('uploads/artikels'), $namaGambar);
 
     Artikel::create([
         'user_id' => $user->id,
-        'gambar' => $path,
+        'gambar' => $path, // disimpan sebagai relative path
         'judul' => $request->judul,
         'bio' => $request->bio
     ]);
 
     return redirect()->route('artikels')->with('success', 'Artikel berhasil dibuat.');
 }
+
 
     /**
      * Display the specified resource.
@@ -139,14 +145,16 @@ class ArtikelController extends Controller
 
     // Jika user mengunggah gambar baru
     if ($request->hasFile('gambar')) {
-        // Hapus gambar lama dari storage
-        if ($artikel->gambar && \Storage::disk('public')->exists($artikel->gambar)) {
-            \Storage::disk('public')->delete($artikel->gambar);
+        // Hapus gambar lama jika ada dan file-nya masih eksis
+        $oldPath = public_path($artikel->gambar);
+        if ($artikel->gambar && file_exists($oldPath)) {
+            unlink($oldPath);
         }
 
-        // Simpan gambar baru
-        $path = $request->file('gambar')->store('artikels', 'public');
-        $artikel->gambar = $path;
+        // Simpan gambar baru langsung ke public/uploads/artikels
+        $filename = time() . '.' . $request->file('gambar')->getClientOriginalExtension();
+        $request->file('gambar')->move(public_path('uploads/artikels'), $filename);
+        $artikel->gambar = 'uploads/artikels/' . $filename;
     }
 
     // Update judul dan bio
@@ -157,6 +165,7 @@ class ArtikelController extends Controller
 
     return redirect()->route('artikels')->with('success', 'Artikel berhasil diperbarui.');
 }
+
 
     /**
      * Remove the specified resource from storage.
@@ -175,16 +184,19 @@ class ArtikelController extends Controller
         return redirect()->route('artikels')->with('error', 'Artikel tidak ditemukan atau bukan milik Anda.');
     }
 
-    // Hapus file gambar jika ada
-    if ($artikel->gambar && \Storage::disk('public')->exists($artikel->gambar)) {
-        \Storage::disk('public')->delete($artikel->gambar);
+    // Hapus file gambar jika ada dan file-nya eksis
+    if ($artikel->gambar) {
+        $gambarPath = public_path($artikel->gambar);
+        if (file_exists($gambarPath)) {
+            unlink($gambarPath);
+        }
     }
 
     $artikel->delete();
 
-    // Redirect ke halaman index (pagination tetap berfungsi)
     return redirect()->route('artikels')->with('success', 'Artikel berhasil dihapus.');
 }
+
 
 
 
