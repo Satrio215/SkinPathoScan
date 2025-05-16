@@ -35,21 +35,23 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request)
-    {
-        try {
-            // Logout dari session
-            Auth::guard('web')->logout();
+{
+    try {
+        // Logout dari session Laravel
+        Auth::guard('web')->logout();
 
-            // Invalidate JWT token
-            JWTAuth::invalidate(JWTAuth::getToken());
-
-            // Clear session token
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            return redirect()->route('login')->with('success', 'Berhasil logout!');
-        } catch (\Exception $e) {
-            return redirect()->route('login')->with('error', 'Logout gagal atau token tidak valid');
+        // Jika ada JWT token, invalidasi
+        if ($token = JWTAuth::getToken()) {
+            JWTAuth::invalidate($token);
         }
+
+        // Clear Laravel session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Berhasil logout!');
+    } catch (\Exception $e) {
+        return redirect()->route('login')->with('error', 'Logout gagal atau token tidak valid');
     }
+}
 }
