@@ -12,20 +12,29 @@
                     </a>
                 </div>
 
+                {{-- Notifikasi Sukses --}}
                 @if (session('success'))
                     <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                         {{ session('success') }}
                     </div>
                 @endif
+
+                {{-- Notifikasi Error --}}
                 @if (session('error'))
                     <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                         {{ session('error') }}
                     </div>
                 @endif
 
+                {{-- Cek apakah ada artikel --}}
                 @if ($artikels->isEmpty())
                     <p class="text-gray-600">Belum ada artikel.</p>
                 @else
+                    @php
+                        $page = method_exists($artikels, 'currentPage') ? $artikels->currentPage() : 1;
+                        $perPage = method_exists($artikels, 'perPage') ? $artikels->perPage() : 5;
+                    @endphp
+
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
@@ -44,13 +53,15 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {{ ($artikels->currentPage() - 1) * $artikels->perPage() + $loop->iteration }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $artikel->judul }}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ $artikel->judul }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                            {{ Str::limit($artikel->bio, 100) }}</td>
+                                            {{ \Illuminate\Support\Str::limit($artikel->bio, 100) }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             @if ($artikel->gambar)
-                                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="thumbnail"
+                                                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="gambar artikel"
                                                     class="w-16 rounded">
                                             @else
                                                 <span class="text-gray-400">-</span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 use App\Models\Artikel;
 
 
@@ -14,17 +15,19 @@ class ArtikelController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-
-        $artikels = Artikel::where('user_id', $user->id)->paginate(5);
-
-        return view('artikels.index', compact('artikels'));
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Harap login terlebih dahulu.');
     }
+
+    $artikels = Artikel::where('user_id', $user->id)->paginate(5);
+
+    return view('artikels.index', compact('artikels'));
+}
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -165,13 +168,13 @@ class ArtikelController extends Controller
     $user = Auth::user();
 
     if (!$user) {
-        return response()->json(['error' => 'Unauthenticated.'], 401);
+        return redirect()->route('login')->with('error', 'Harap login terlebih dahulu.');
     }
 
     $artikel = Artikel::where('id', $id)->where('user_id', $user->id)->first();
 
     if (!$artikel) {
-        return redirect()->back()->with('error', 'Artikel tidak ditemukan atau bukan milik Anda.');
+        return redirect()->route('artikels')->with('error', 'Artikel tidak ditemukan atau bukan milik Anda.');
     }
 
     // Hapus file gambar jika ada
@@ -181,12 +184,10 @@ class ArtikelController extends Controller
 
     $artikel->delete();
 
-    // Ambil ulang semua artikel user
-    $artikels = Artikel::where('user_id', $user->id)->get();
-
-    return view('artikels.index', compact('artikels'))
-        ->with('success', 'Artikel berhasil dihapus.');
+    // Redirect ke halaman index (pagination tetap berfungsi)
+    return redirect()->route('artikels')->with('success', 'Artikel berhasil dihapus.');
 }
+
 
 
 }
