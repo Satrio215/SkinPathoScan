@@ -10,6 +10,21 @@
 
 <body class="bg-gradient-to-br from-white-100 to-white-300 min-h-screen flex items-center justify-center">
 
+    {{-- Flash Message --}}
+    @if (session('success'))
+        <div
+            class="fixed top-5 right-5 z-50 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div
+            class="fixed top-5 right-5 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg text-sm">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="bg-white p-10 rounded-2xl shadow-2xl w-full max-w-md">
         <div class="text-center mb-6">
             <img src="https://img.icons8.com/fluency/96/lock.png" alt="login-icon" class="mx-auto mb-2" />
@@ -17,7 +32,7 @@
             <p class="text-gray-500 text-sm mt-1">Silakan login untuk akses database SkinPathoScan</p>
         </div>
 
-        {{-- Menampilkan error validasi --}}
+        {{-- Validasi Error --}}
         @if ($errors->any())
             <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                 <ul class="list-disc list-inside text-sm">
@@ -25,13 +40,6 @@
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div>
-        @endif
-
-        {{-- Menampilkan pesan error dari session --}}
-        @if (session('error'))
-            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {{ session('error') }}
             </div>
         @endif
 
