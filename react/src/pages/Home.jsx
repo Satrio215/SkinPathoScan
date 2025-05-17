@@ -1,60 +1,148 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import HeroSection from "../assets/containers/HeroSection";
 import ImageAnalyzer from "../assets/containers/ImageAnalyzer";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 const Home = () => {
-    const [image, setImage] = useState(null);
-    const [preview, setPreview] = useState(null);
-    const [result, setResult] = useState(null);
-    const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setImage(file);
-        setResult(null);
-        if (file) {
-            setPreview(URL.createObjectURL(file));
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setResult(null);
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!image) return;
+    const formData = new FormData();
+    formData.append("file", image);
+    setLoading(true);
+    setResult(null);
+    try {
+      const response = await fetch(
+        "https://azrafazizz-skincancer-fastapi.hf.space/v2/predict/",
+        {
+          method: "POST",
+          body: formData,
         }
-    };
+      );
+      if (!response.ok) throw new Error("Upload gagal");
+      const data = await response.json();
+      setResult(data);
+    } catch (error) {
+      console.error(error);
+      setResult({ error: "Gagal memproses gambar" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleSubmit = async () => {
-        if (!image) return;
+  return (
+    <div>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <HeroSection />
+      </motion.div>
 
-        const formData = new FormData();
-        formData.append("file", image);
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+      >
+        <ImageAnalyzer
+          image={image}
+          preview={preview}
+          result={result}
+          loading={loading}
+          handleFileChange={handleFileChange}
+          handleSubmit={handleSubmit}
+        />
+      </motion.div>
 
-        setLoading(true);
-        setResult(null);
-
-        try {
-            const response = await fetch(
-                "https://azrafazizz-skincancer-fastapi.hf.space/v2/predict/",
-                {
-                    method: "POST",
-                    body: formData,
-                },
-            );
-
-            if (!response.ok) throw new Error("Upload gagal");
-
-            const data = await response.json();
-            setResult(data);
-        } catch (error) {
-            console.error(error);
-            setResult({ error: "Gagal memproses gambar" });
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-gradient-to-b text-white font-sans">
-            <div className="max-w-7xl mx-auto p-6">
-                <HeroSection />
-                <ImageAnalyzer />
-            </div>
+      <motion.section
+        className="py-12 px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+      >
+        <h2 className="text-2xl font-bold text-center mb-4 text-white">
+          Tipe - Tipe Kanker Kulit
+        </h2>
+        <p className="text-center mb-8 text-white text-sm">
+          Membantu Anda memahami dan berkomunikasi dengan pengguna bahasa isyarat.
+        </p>
+        <div className="flex flex-col md:flex-row justify-center gap-8">
+          {[1, 2].map((_, index) => (
+            <motion.div
+              key={index}
+              className="bg-white text-black p-6 rounded-xl shadow-lg w-full md:w-1/3"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2, duration: 0.6 }}
+            >
+              <div className="w-full h-40 bg-gray-200 rounded mb-4" />
+              <h3 className="text-center font-semibold mb-2">
+                {index === 0
+                  ? "Kenali kanker kulit ganas"
+                  : "Kenali kanker kulit tidak ganas"}
+              </h3>
+              <button className="bg-[#043d7a] text-white px-4 py-2 rounded w-full">
+                Pelajari lebih lanjut
+              </button>
+            </motion.div>
+          ))}
         </div>
-    );
+      </motion.section>
+
+      <motion.section
+        className="py-12 px-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={fadeInUp}
+      >
+        <h2 className="text-2xl font-bold text-center mb-10 text-white">
+          Pemeriksa Kanker Kulit Dengan AI
+        </h2>
+        {[1, 2].map((_, index) => (
+          <motion.div
+            key={index}
+            className="bg-gray-100 p-6 rounded-xl shadow-lg mb-8 max-w-4xl mx-auto text-black"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.2, duration: 0.6 }}
+          >
+            <div className="w-full h-40 bg-gray-300 rounded mb-4" />
+            <h4 className="font-semibold mb-2">
+              {index === 0 ? "Keadaan Terkini" : "Jenis AI"}
+            </h4>
+            <p className="text-sm">
+              {index === 0
+                ? "Dalam dunia medis, deteksi dini kanker kulit merupakan salah satu faktor krusial dalam meningkatkan tingkat kesembuhan pasien..."
+                : "Jenis AI yang digunakan adalah supervised learning dengan algoritma klasifikasi seperti SVM, KNN, dan Naive Bayes..."}
+            </p>
+          </motion.div>
+        ))}
+      </motion.section>
+    </div>
+  );
 };
 
 export default Home;
