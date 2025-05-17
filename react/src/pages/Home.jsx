@@ -135,8 +135,8 @@ const Home = () => {
             </h4>
             <p className="text-sm">
               {index === 0
-                ? "Dalam dunia medis, deteksi dini kanker kulit merupakan salah satu faktor krusial dalam meningkatkan tingkat kesembuhan pasien..."
-                : "Jenis AI yang digunakan adalah supervised learning dengan algoritma klasifikasi seperti SVM, KNN, dan Naive Bayes..."}
+                ? "Dalam dunia medis, deteksi dini kanker kulit merupakan salah satu faktor krusial dalam meningkatkan tingkat kesembuhan pasien. Namun, kenyataannya, proses diagnosis konvensional masih menghadapi berbagai kendala seperti prosedur yang invasif, biaya yang tinggi, serta waktu tunggu yang lama. Di sisi lain, masyarakat awam sering kali kesulitan mengenali gejala awal kanker kulit karena keterbatasan akses terhadap informasi dan tenaga medis, terutama di wilayah terpencil."
+                : "Jenis AI yang digunakan adalah supervised learning dengan algoritma klasifikasi seperti SVM, KNN, dan Naive Bayes. Dataset yang dipakai berasal dari ISIC, berisi citra lesi kulit yang sudah dilabeli. Ekstraksi fitur dilakukan dengan metode ABCD, GLCM, dan HOG untuk mendukung proses klasifikasi dan meningkatkan akurasi deteksi kanker kulit."}
             </p>
           </motion.div>
         ))}
