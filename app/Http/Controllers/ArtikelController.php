@@ -22,7 +22,7 @@ class ArtikelController extends Controller
         return redirect()->route('login')->with('error', 'Harap login terlebih dahulu.');
     }
 
-    $artikels = Artikel::where('user_id', $user->id)->paginate(5);
+    $artikels = Artikel::where('user_id', $user->id)->latest()->paginate(5);
 
     return view('artikels.index', compact('artikels'));
 }

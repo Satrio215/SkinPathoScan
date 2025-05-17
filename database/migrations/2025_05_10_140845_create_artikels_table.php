@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->index();
             $table->string('gambar');
             $table->string('judul');
-            $table->string('bio');
+            $table->text('bio');
             $table->timestamps();
         });
     }
