@@ -20,5 +20,18 @@ Route::get('/', function () {
 })->name('login');
 
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::get('/artikels', [ArtikelController::class, 'index'])->name('artikels');
+Route::get('/artikels/create', [ArtikelController::class, 'create'])->name('artikels.create');
+Route::post('/artikels', [ArtikelController::class, 'store'])->name('artikels.store');
+Route::delete('/artikel/delete/{id}', [ArtikelController::class, 'destroy'])->name('artikels.delete');
+Route::get('/artikels/edit/{id}', [ArtikelController::class, 'edit'])->name('artikels.edit');
+Route::post('/artikels/update/{id}', [ArtikelController::class, 'update'])->name('artikels.update');
+
+
+
+
 
 
