@@ -22,28 +22,11 @@ const Navbar = () => {
 
                     {/* Artikel Dropdown */}
                     <div className="relative">
-                        <button
-                            className="flex items-center hover:underline"
-                            onClick={() => setDropdownOpen((prev) => !prev)}
-                        >
-                            Artikel <ChevronDown className="ml-1 h-4 w-4" />
-                        </button>
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 bg-white text-black shadow rounded w-44 z-20">
-                                <Link
-                                    to="/artikel"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
-                                    Semua Artikel
-                                </Link>
-                                <Link
-                                    to="/artikel/detail"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
-                                    Detail Artikel
-                                </Link>
-                            </div>
-                        )}
+                        <Link to="/artikel" className="hover:underline">
+                            <button className="flex items-center">
+                                Artikel
+                            </button>
+                        </Link>
                     </div>
 
                     <Link to="/about" className="hover:underline">
