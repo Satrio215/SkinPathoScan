@@ -74,41 +74,51 @@ const Home = () => {
       </motion.div>
 
       <motion.section
-        className="py-12 px-6"
+        className="py-12 md:pt-28"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={fadeInUp}
-      >
-        <h2 className="text-2xl font-bold text-center mb-4 text-white">
-          Tipe - Tipe Kanker Kulit
+        >
+        <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-white">
+            Tipe - Tipe Kanker Kulit
         </h2>
-        <p className="text-center mb-8 text-white text-sm">
-          Membantu Anda memahami dan berkomunikasi dengan pengguna bahasa isyarat.
+        <p className="text-base md:text-lg text-center mb-8 text-white">
+            Membantu Anda memahami dan berkomunikasi dengan pengguna bahasa isyarat.
         </p>
-        <div className="flex flex-col md:flex-row justify-center gap-8">
-          {[1, 2].map((_, index) => (
-            <motion.div
-              key={index}
-              className="bg-white text-black p-6 rounded-xl shadow-lg w-full md:w-1/3"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2, duration: 0.6 }}
-            >
-              <div className="w-full h-40 bg-gray-200 rounded mb-4" />
-              <h3 className="text-center font-semibold mb-2">
-                {index === 0
-                  ? "Kenali kanker kulit ganas"
-                  : "Kenali kanker kulit tidak ganas"}
-              </h3>
-              <button className="bg-[#043d7a] text-white px-4 py-2 rounded w-full">
-                Pelajari lebih lanjut
-              </button>
-            </motion.div>
-          ))}
+
+        <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col lg:flex-row justify-center gap-8">
+            {[1, 2].map((_, index) => (
+                <motion.div
+                key={index}
+                className="flex flex-col bg-white text-black p-6 rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] w-full lg:w-1/2 h-[60vh]"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2, duration: 0.6 }}
+                >
+                {/* Gambar */}
+                <div className="flex-[3] w-full bg-gray-200 rounded-xl mb-4" />
+
+                {/* Konten */}
+                <div className="flex-[1] flex flex-col justify-between">
+                    <h3 className="text-center text-2xl font-semibold mb-2">
+                    {index === 0
+                        ? "Kenali kanker kulit ganas"
+                        : "Kenali kanker kulit tidak ganas"}
+                    </h3>
+                    <button className="bg-[#043d7a] text-white font-semibold px-4 py-2 rounded-lg w-full">
+                    Pelajari lebih lanjut
+                    </button>
+                </div>
+                </motion.div>
+            ))}
+            </div>
         </div>
-      </motion.section>
+        </motion.section>
+
+
 
       <motion.section
         className="py-12 px-6"
@@ -117,7 +127,7 @@ const Home = () => {
         viewport={{ once: true }}
         variants={fadeInUp}
       >
-        <h2 className="text-2xl font-bold text-center mb-10 text-white">
+        <h2 className="text-3xl md:text-5xl font-bold text-center mb-10 text-white">
           Pemeriksa Kanker Kulit Dengan AI
         </h2>
         {[1, 2].map((_, index) => (
@@ -129,7 +139,7 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ delay: index * 0.2, duration: 0.6 }}
           >
-            <div className="w-full h-40 bg-gray-300 rounded mb-4" />
+            <div className="w-full h-2 bg-gray-300 rounded mb-4" />
             <h4 className="font-semibold mb-2">
               {index === 0 ? "Keadaan Terkini" : "Jenis AI"}
             </h4>
