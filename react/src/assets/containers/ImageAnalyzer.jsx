@@ -102,7 +102,8 @@ const ImageAnalyzer = () => {
         setBubbleMessage("Silakan unggah gambar kulit Anda");
     };
     return (
-        <>
+        <div className="mx-auto max-w-6xl px-3 pb-8 md:pb-20">
+            {/* Title & Description */}
             <h2 className="text-5xl md:text-6xl font-bold text-center p-4 pt-5 md:pt-15">
                 Deteksi Kanker Kulit
             </h2>
@@ -165,12 +166,12 @@ const ImageAnalyzer = () => {
                         </Button>
                     </div>
                 </div>
+
                 {/* Result Area */}
                 <div className="mt-6 md:mt-0">
-                    {!result && (
-                        <div className="text-center ms-4 p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative">
+                    {!result ? (
+                        <div className="text-center  p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative">
                             {/* Bubble Chat */}
-
                             {showBubble && (
                                 <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base">
                                     <p className="font-semibold">
@@ -180,22 +181,18 @@ const ImageAnalyzer = () => {
                                 </div>
                             )}
 
-                            {/* Bubble Chat Submit */}
-
                             {/* Maskot Gajah */}
                             {showGajah && (
                                 <div className="ms-36" ref={gajahRef}>
                                     <img
                                         src="/Gajah.webp"
                                         className="w-40 h-40 mt-6"
-                                        alt="upload"
+                                        alt="Gajah"
                                     />
                                 </div>
                             )}
                         </div>
-                    )}
-
-                    {result && (
+                    ) : (
                         <div className="p-4 md:p-6 bg-gray-50 border rounded-2xl text-left">
                             <h2 className="font-semibold text-gray-700 text-lg mb-4">
                                 Hasil Analisis:
@@ -214,7 +211,7 @@ const ImageAnalyzer = () => {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

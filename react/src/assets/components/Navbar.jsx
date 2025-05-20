@@ -7,7 +7,7 @@ const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
-        <header className="bg-[#009CE1] text-white px-4 py-4 md:px-8">
+        <header className="sticky top-0 z-50 bg-[#009CE1] text-white px-4 py-4 md:px-8">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 {/* Brand */}
                 <h1 className="text-2xl font-bold">
@@ -22,28 +22,11 @@ const Navbar = () => {
 
                     {/* Artikel Dropdown */}
                     <div className="relative">
-                        <button
-                            className="flex items-center hover:underline"
-                            onClick={() => setDropdownOpen((prev) => !prev)}
-                        >
-                            Artikel <ChevronDown className="ml-1 h-4 w-4" />
-                        </button>
-                        {dropdownOpen && (
-                            <div className="absolute right-0 mt-2 bg-white text-black shadow rounded w-44 z-20">
-                                <Link
-                                    to="/artikel"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
-                                    Semua Artikel
-                                </Link>
-                                <Link
-                                    to="/artikel/detail"
-                                    className="block px-4 py-2 hover:bg-gray-100"
-                                >
-                                    Detail Artikel
-                                </Link>
-                            </div>
-                        )}
+                        <Link to="/artikel" className="hover:underline">
+                            <button className="flex items-center">
+                                Artikel
+                            </button>
+                        </Link>
                     </div>
 
                     <Link to="/about" className="hover:underline">

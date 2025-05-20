@@ -4,23 +4,20 @@ import Footer from "./Footer";
 
 const DefaultLayout = ({ children }) => {
     return (
-        <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900">
+        <div className="flex flex-col min-h-screen bg-[#002A6E] text-gray-900">
             {/* Header */}
-            <header>
-                <Navbar />
-            </header>
+            <Navbar />
 
             {/* Main content area */}
 
             <main
                 className="flex-1 "
                 style={{
-                    background: "linear-gradient(to bottom, #009CE1, #005296, #002A6E)",
+                    background:
+                        "linear-gradient(to bottom, #009CE1, #005296, #002A6E)",
                 }}
             >
-                <div className="w-full text-white">
-                    {children}
-                </div>
+                <div className="w-full text-white">{children}</div>
             </main>
 
             {/* Footer */}
