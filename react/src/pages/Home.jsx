@@ -76,7 +76,8 @@ const Home = () => {
       </motion.div>
 
       <motion.section
-        className="py-12 md:pt-28"
+        className="py-12 md:pt-12"
+        style={{ backgroundImage: "url('/bg-kanker.png')" }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
