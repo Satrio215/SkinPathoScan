@@ -2,11 +2,11 @@ import React from "react";
 
 const HeroSection = () => {
     return (
-        <section className="text-white px-4 py-16 md:px-8 ">
-            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12 max-w-7xl mx-auto">
+        <section className="text-white py-20">
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 items-center gap-12">
                 {/* Text Content */}
                 <div>
-                    <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
                         Hello, Welcome to <br />
                         <span className="text-white">SkinPathoScan</span>
                     </h2>
@@ -22,11 +22,11 @@ const HeroSection = () => {
                 </div>
 
                 {/* Image */}
-                <div className="flex justify-center">
+                <div className="flex justify-center md:justify-end">
                     <img
                         src="/home.png"
                         alt="Skin Analysis Illustration"
-                        className="w-full max-w-sm md:max-w-md"
+                        className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
                     />
                 </div>
             </div>

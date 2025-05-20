@@ -1,11 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "../components/Button";
+import { gsap } from "gsap";
 
 const ImageAnalyzer = () => {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
+    const gajahRef = useRef(null);
+    const [showGajah, setShowGajah] = useState(true);
+    const [bubbleMessage, setBubbleMessage] = useState(
+        "Silakan unggah gambar kulit Anda",
+    );
+    const [showBubble, setShowBubble] = useState(true);
+
+    const animasiGajahTerbang = () => {
+        if (!gajahRef.current) return Promise.resolve();
+
+        const tl = gsap.timeline();
+
+        tl.to(gajahRef.current, {
+            y: -300, // terbang lebih tinggi
+            duration: 2,
+            ease: "power1.out",
+        })
+            .to(
+                gajahRef.current,
+                {
+                    x: "-=20", // goyang ke kiri
+                    duration: 0.3,
+                    yoyo: true,
+                    repeat: 5, // bolak-balik 5 kali
+                    ease: "sine.inOut",
+                },
+                "-=1.5", // mulai goyang saat gajah masih terbang (offset overlap animasi)
+            )
+            .to(gajahRef.current, {
+                opacity: 0,
+                duration: 0.5,
+                ease: "power1.out",
+                onComplete: () => {
+                    setShowGajah(false);
+                    // reset posisi gajah biar siap muncul lagi
+                    gsap.set(gajahRef.current, { x: 0, y: 0, opacity: 1 });
+                },
+            });
+
+        return tl.then ? tl.then() : Promise.resolve();
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -13,36 +55,58 @@ const ImageAnalyzer = () => {
             setImage(file);
             setPreview(URL.createObjectURL(file));
             setResult(null);
+            setBubbleMessage("Klik tombol Submit untuk deteksi kulit Anda!");
+            setShowBubble(true); // Pastikan bubble tetap tampil setelah upload
         }
     };
 
     const handleSubmit = async () => {
         if (!image) return;
         setLoading(true);
-        // Simulasi API
-        setTimeout(() => {
-            setResult({
-                predictions: {
-                    Malignant: Math.random() * 0.5 + 0.25,
-                    Benign: Math.random() * 0.5 + 0.25,
+
+        setShowBubble(false); // Sembunyikan bubble saat submit
+        await animasiGajahTerbang();
+        const formData = new FormData();
+        formData.append("file", image);
+
+        setLoading(true);
+        setResult(null);
+
+        try {
+            const response = await fetch(
+                "https://azrafazizz-skincancer-fastapi.hf.space/v2/predict/",
+                {
+                    method: "POST",
+                    body: formData,
                 },
-            });
+            );
+
+            if (!response.ok) throw new Error("Upload gagal");
+
+            const data = await response.json();
+            setResult(data);
+        } catch (error) {
+            console.error(error);
+            setResult({ error: "Gagal memproses gambar" });
+        } finally {
             setLoading(false);
-        }, 2000);
+        }
     };
 
-    const handleClear = () => {
-        setImage(null);
+    const handleClear = async () => {
         setPreview(null);
         setResult(null);
+        setLoading(false);
+        setShowGajah(true);
+        setShowBubble(true); // Sembunyikan bubble saat submit
+        setBubbleMessage("Silakan unggah gambar kulit Anda");
     };
-
     return (
         <>
-            <h2 className="text-2xl md:text-4xl font-bold text-center p-4">
+            <h2 className="text-5xl md:text-6xl font-bold text-center p-4 pt-5 md:pt-15">
                 Deteksi Kanker Kulit
             </h2>
-            <p className="text-base md:text-xl text-center p-4 pb-8 md:pb-10">
+            <p className="text-base md:text-lg text-center p-4 pb-8 md:pb-10">
                 Silakan unggah foto kulit yang ingin Anda periksa
             </p>
 
@@ -53,7 +117,11 @@ const ImageAnalyzer = () => {
                         {!preview ? (
                             <label className="text-center cursor-pointer w-full h-full flex flex-col items-center justify-center">
                                 <div className="text-gray-400 text-2xl mb-2">
-                                    ↑
+                                    <img
+                                        src="/uploadIcon.webp"
+                                        className="w-14 h-14"
+                                        alt="upload"
+                                    />
                                 </div>
                                 <p className="text-gray-600 text-sm md:text-base">
                                     Drop Image Here
@@ -82,7 +150,6 @@ const ImageAnalyzer = () => {
                         <Button
                             variant="outline"
                             onClick={handleClear}
-                            disabled={!preview}
                             fullWidth
                         >
                             Clear
@@ -98,21 +165,46 @@ const ImageAnalyzer = () => {
                         </Button>
                     </div>
                 </div>
-
                 {/* Result Area */}
                 <div className="mt-6 md:mt-0">
+                    {!result && (
+                        <div className="text-center ms-4 p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative">
+                            {/* Bubble Chat */}
+
+                            {showBubble && (
+                                <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base">
+                                    <p className="font-semibold">
+                                        {bubbleMessage}
+                                    </p>
+                                    <div className="absolute bottom-[-8px] left-2/3 transform -translate-x-1/2 w-0 h-2 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-100"></div>
+                                </div>
+                            )}
+
+                            {/* Bubble Chat Submit */}
+
+                            {/* Maskot Gajah */}
+                            {showGajah && (
+                                <div className="ms-36" ref={gajahRef}>
+                                    <img
+                                        src="/Gajah.webp"
+                                        className="w-40 h-40 mt-6"
+                                        alt="upload"
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     {result && (
                         <div className="p-4 md:p-6 bg-gray-50 border rounded-2xl text-left">
                             <h2 className="font-semibold text-gray-700 text-lg mb-4">
                                 Hasil Analisis:
                             </h2>
-
                             <ProgressBar
                                 label="Malignant (Ganas)"
                                 value={result.predictions?.Malignant}
                                 color="bg-red-500"
                             />
-
                             <ProgressBar
                                 label="Benign (Jinak)"
                                 value={result.predictions?.Benign}

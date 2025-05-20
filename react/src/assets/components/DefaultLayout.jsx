@@ -15,7 +15,7 @@ const DefaultLayout = ({ children }) => {
             <main
                 className="flex-1 px-4 py-8 md:px-8"
                 style={{
-                    background: "linear-gradient(to bottom, #009CE1, #006BA1)",
+                    background: "linear-gradient(to bottom, #009CE1, #005296, #002A6E)",
                 }}
             >
                 <div className="max-w-7xl mx-auto w-full text-white">
