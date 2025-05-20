@@ -73,6 +73,10 @@ const ArtikelDetail = () => {
         <div>
             {/* Header */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h1 className="text-4xl sm:text-5xl font-bold mb-8 break-words">
+                    {artikel.judul || "Artikel"}
+                </h1>
+
                 {/* Image Container */}
                 <div className="bg-white rounded-lg overflow-hidden mb-12 shadow-lg">
                     {artikel.gambar ? (

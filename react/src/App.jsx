@@ -5,8 +5,6 @@ import Artikel from "./pages/Artikel.jsx";
 import ArtikelDetail from "./pages/ArtikelDetail.jsx";
 import Ganas from "./pages/Ganas.jsx";
 import TidakGanas from "./pages/TidakGanas.jsx";
-
-
 import DefaultLayout from "./assets/components/DefaultLayout.jsx";
 
 function App() {

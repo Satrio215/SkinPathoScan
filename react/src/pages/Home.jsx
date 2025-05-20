@@ -155,14 +155,14 @@ const Home = () => {
                 {[1, 2].map((_, index) => (
                     <motion.div
                         key={index}
-                        className="bg-white p-6 md:p-10 rounded-2xl shadow-lg mb-10 max-w-4xl mx-auto text-black"
+                        className="bg-white p-6 md:p-10 rounded-2xl shadow-lg mb-10 w-full max-w-5xl mx-auto text-black"
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.2, duration: 0.6 }}
                     >
                         {/* Gambar */}
-                        <div className="w-full mb-6 rounded-xl overflow-hidden border-4">
+                        <div className="w-full mb-6 rounded-xl overflow-hidden">
                             <img
                                 src={
                                     index === 0
@@ -179,10 +179,10 @@ const Home = () => {
                         </div>
 
                         {/* Judul dan Paragraf */}
-                        <h4 className="text-lg font-semibold mb-3">
+                        <h4 className="text-xl md:text-2xl font-semibold mb-3">
                             {index === 0 ? "Keadaan Terkini" : "Algoritma AI"}
                         </h4>
-                        <p className="text-base leading-relaxed text-justify">
+                        <p className="text-base md:text-xl leading-relaxed text-justify">
                             {index === 0
                                 ? "Dalam dunia medis, deteksi dini kanker kulit merupakan salah satu faktor krusial dalam meningkatkan tingkat kesembuhan pasien. Namun, kenyataannya, proses diagnosis konvensional masih menghadapi berbagai kendala seperti prosedur yang invasif, biaya yang tinggi, serta waktu tunggu yang lama. Di sisi lain, masyarakat awam sering kali kesulitan mengenali gejala awal kanker kulit karena keterbatasan akses terhadap informasi dan tenaga medis, terutama di wilayah terpencil."
                                 : "Algoritma AI yang digunakan adalah CNN. Algoritma Convolutional Neural Network (CNN) dipilih karena kemampuannya yang unggul dalam mengenali pola visual dari gambar."}
