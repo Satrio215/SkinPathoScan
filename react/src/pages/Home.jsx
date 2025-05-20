@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import HeroSection from "../assets/containers/HeroSection";
 import ImageAnalyzer from "../assets/containers/ImageAnalyzer";
+import { Link } from "react-router-dom";
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -9,6 +10,45 @@ const fadeInUp = {
 };
 
 const Home = () => {
+    const [image, setImage] = useState(null);
+    const [preview, setPreview] = useState(null);
+    const [result, setResult] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+        setResult(null);
+        if (file) {
+            setPreview(URL.createObjectURL(file));
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (!image) return;
+        const formData = new FormData();
+        formData.append("file", image);
+        setLoading(true);
+        setResult(null);
+        try {
+            const response = await fetch(
+                "https://azrafazizz-skincancer-fastapi.hf.space/v2/predict/",
+                {
+                    method: "POST",
+                    body: formData,
+                },
+            );
+            if (!response.ok) throw new Error("Upload gagal");
+            const data = await response.json();
+            setResult(data);
+        } catch (error) {
+            console.error(error);
+            setResult({ error: "Gagal memproses gambar" });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div>
             <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
@@ -16,11 +56,19 @@ const Home = () => {
             </motion.div>
 
             <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
-                <ImageAnalyzer />
+                <ImageAnalyzer
+                    image={image}
+                    preview={preview}
+                    result={result}
+                    loading={loading}
+                    handleFileChange={handleFileChange}
+                    handleSubmit={handleSubmit}
+                />
             </motion.div>
 
             <motion.section
-                className="py-12 md:pt-28"
+                className="py-12 md:pt-12"
+                style={{ backgroundImage: "url('/bg-kanker.png')" }}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -39,7 +87,7 @@ const Home = () => {
                         {[1, 2].map((_, index) => (
                             <motion.div
                                 key={index}
-                                className="flex flex-col bg-white text-black p-6 rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] w-full lg:w-1/2 h-[60vh]"
+                                className="flex flex-col bg-white text-black p-6 rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] w-full lg:w-1/2"
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
@@ -48,19 +96,38 @@ const Home = () => {
                                     duration: 0.6,
                                 }}
                             >
-                                {/* Gambar */}
-                                <div className="flex-[3] w-full bg-gray-200 rounded-xl mb-4" />
+                                <div className="w-full aspect-square rounded-xl mb-4 overflow-hidden bg-gray-200">
+                                    <img
+                                        src={
+                                            index === 0
+                                                ? "/ganas.png"
+                                                : "/tidak-ganas.png"
+                                        }
+                                        alt={
+                                            index === 0
+                                                ? "Kanker Kulit Ganas"
+                                                : "Kanker Kulit Tidak Ganas"
+                                        }
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
 
-                                {/* Konten */}
-                                <div className="flex-[1] flex flex-col justify-between">
+                                <div className="flex flex-col justify-between pb-4">
                                     <h3 className="text-center text-2xl font-semibold mb-2">
                                         {index === 0
                                             ? "Kenali kanker kulit ganas"
                                             : "Kenali kanker kulit tidak ganas"}
                                     </h3>
-                                    <button className="bg-[#043d7a] text-white font-semibold px-4 py-2 rounded-lg w-full">
+                                    <Link
+                                        to={
+                                            index === 0
+                                                ? "/ganas"
+                                                : "/tidak-ganas"
+                                        }
+                                        className="bg-[#043d7a] text-white font-semibold px-4 py-2 rounded-lg w-full text-center"
+                                    >
                                         Pelajari lebih lanjut
-                                    </button>
+                                    </Link>
                                 </div>
                             </motion.div>
                         ))}
