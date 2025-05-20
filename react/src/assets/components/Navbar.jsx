@@ -7,7 +7,7 @@ const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
-        <header className="bg-[#009CE1] text-white px-4 py-4 md:px-8">
+        <header className="sticky top-0 z-50 bg-[#009CE1] text-white px-4 py-4 md:px-8">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 {/* Brand */}
                 <h1 className="text-2xl font-bold">
