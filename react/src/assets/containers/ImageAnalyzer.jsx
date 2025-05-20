@@ -103,10 +103,10 @@ const ImageAnalyzer = () => {
     };
     return (
         <>
-            <h2 className="text-2xl md:text-4xl font-bold text-center p-4">
+            <h2 className="text-5xl md:text-6xl font-bold text-center p-4 pt-5 md:pt-15">
                 Deteksi Kanker Kulit
             </h2>
-            <p className="text-base md:text-xl text-center p-4 pb-8 md:pb-10">
+            <p className="text-base md:text-lg text-center p-4 pb-8 md:pb-10">
                 Silakan unggah foto kulit yang ingin Anda periksa
             </p>
 

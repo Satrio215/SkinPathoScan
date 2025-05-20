@@ -17,29 +17,41 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-        // Coba login dengan JWT
+        // Coba login via JWT
         if (! $token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Email atau password salah'], 401);
+            return redirect()->back()->with('error', 'Email atau password salah');
         }
 
-        // Ambil user yang berhasil login dari token
-        $user = Auth::user();
+        // Ambil user dari JWT
+        $user = JWTAuth::user();
 
-        // Kembalikan token dan data user (tanpa session)
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ]);
+        // Login ke session (web guard)
+        Auth::guard('web')->login($user);
+
+        // Simpan token ke session (opsional jika ingin akses API dengan token ini)
+        session(['jwt_token' => $token]);
+
+        return redirect()->route('artikels')->with('success', 'Berhasil login!');
     }
 
     public function logout(Request $request)
-    {
-        try {
-            JWTAuth::invalidate(JWTAuth::getToken());
+{
+    try {
+        // Logout dari session Laravel
+        Auth::guard('web')->logout();
 
-            return response()->json(['message' => 'Logout berhasil']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Logout gagal atau token tidak valid'], 400);
+        // Jika ada JWT token, invalidasi
+        if ($token = JWTAuth::getToken()) {
+            JWTAuth::invalidate($token);
         }
+
+        // Clear Laravel session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Berhasil logout!');
+    } catch (\Exception $e) {
+        return redirect()->route('login')->with('error', 'Logout gagal atau token tidak valid');
     }
+}
 }

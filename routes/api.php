@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ArtikelController;
-
+use App\Http\Controllers\Api\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,10 @@ Route::middleware('auth:api')->group(function () {
     //Logout
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'show']);
+
 
 
 
