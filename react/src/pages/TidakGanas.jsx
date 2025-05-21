@@ -29,7 +29,15 @@ const TidakGanas = () => {
     ];
 
     return (
-        <div className="text-white px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 2xl:px-54 py-12">
+        <div
+            className="text-white px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32 2xl:px-54 py-12"
+            style={{
+                backgroundImage: 'url("/bg-kanker.png")',
+                backgroundSize: "50%",
+                backgroundRepeat: "repeat",
+                backgroundPosition: "top left",
+            }}
+        >
             <h1 className="text-4xl md:text-6xl font-bold mb-6 pb-4">
                 Kanker Kulit Ganas
             </h1>
