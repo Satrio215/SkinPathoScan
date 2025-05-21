@@ -42,9 +42,9 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $artikel = Artikel::find($id);
+        $artikel = Artikel::where('slug', $slug)->first();
 
         if (!$artikel) {
             return response()->json(['error' => 'Artikel tidak ditemukan.'], 404);

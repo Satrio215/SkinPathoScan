@@ -16,8 +16,9 @@
                 </div>
             @endif
 
-            <form action="{{ route('artikels.update', $artikel->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('artikels.update', $artikel->slug) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
                 <div class="mb-4">
                     <label for="judul" class="block text-sm font-medium text-gray-700">Judul</label>
