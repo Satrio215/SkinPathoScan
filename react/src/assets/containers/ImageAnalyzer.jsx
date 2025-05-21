@@ -61,15 +61,22 @@ const ImageAnalyzer = () => {
     };
 
     const handleSubmit = async () => {
-        if (!image) return;
-        setLoading(true);
+        if (!image) {
+            setBubbleMessage(
+                "Silakan unggah gambar terlebih dahulu sebelum submit.",
+            );
+            setShowBubble(true); // pastikan bubble muncul
+            return;
+        }
 
+        setLoading(true);
         setShowBubble(false); // Sembunyikan bubble saat submit
+
         await animasiGajahTerbang();
+
         const formData = new FormData();
         formData.append("file", image);
 
-        setLoading(true);
         setResult(null);
 
         try {
@@ -94,6 +101,7 @@ const ImageAnalyzer = () => {
     };
 
     const handleClear = async () => {
+        setImage(null);
         setPreview(null);
         setResult(null);
         setLoading(false);
@@ -170,27 +178,17 @@ const ImageAnalyzer = () => {
                 {/* Result Area */}
                 <div className="mt-6 md:mt-0">
                     {!result ? (
-                        <div className="text-center  p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative">
+                        <div className="text-center  p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative py-6">
                             {/* Bubble Chat */}
                             {showBubble && (
-                                <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base ms-24">
+                                <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base  my-auto mx-auto">
                                     <p className="font-semibold">
                                         {bubbleMessage}
                                     </p>
-                                    <div className="absolute bottom-[-8px] left-2/3 transform -translate-x-1/2 w-0 h-2 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-blue-100"></div>
                                 </div>
                             )}
 
                             {/* Maskot Gajah */}
-                            {showGajah && (
-                                <div className="ms-60" ref={gajahRef}>
-                                    <img
-                                        src="/Gajah.webp"
-                                        className="w-36 h-36 mt-6"
-                                        alt="Gajah"
-                                    />
-                                </div>
-                            )}
                         </div>
                     ) : (
                         <div className="p-4 md:p-6 bg-gray-50 border rounded-2xl text-left">

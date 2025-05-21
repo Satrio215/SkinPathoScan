@@ -70,7 +70,14 @@ const ArtikelDetail = () => {
     if (!artikel) return null;
 
     return (
-        <div>
+        <div
+            style={{
+                backgroundImage: 'url("/bg-kanker.png")',
+                backgroundSize: "50%",
+                backgroundRepeat: "repeat",
+                backgroundPosition: "top left",
+            }}
+        >
             {/* Header */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h1 className="text-4xl sm:text-5xl font-bold mb-8 break-words">
@@ -83,7 +90,7 @@ const ArtikelDetail = () => {
                         <img
                             src={`https://qwerty.satrio.io/public/${artikel.gambar}`}
                             alt={artikel.judul}
-                            className="w-full h-auto object-cover"
+                            className="w-full aspect-[16/9] md:aspect-[21/9] object-cover transition-all duration-300 ease-in-out"
                             onError={(e) => {
                                 e.target.style.display = "none";
                                 e.target.parentElement.style.background =
