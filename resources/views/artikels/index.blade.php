@@ -30,11 +30,6 @@
                 @if ($artikels->isEmpty())
                     <p class="text-gray-600">Belum ada artikel.</p>
                 @else
-                    @php
-                        $page = method_exists($artikels, 'currentPage') ? $artikels->currentPage() : 1;
-                        $perPage = method_exists($artikels, 'perPage') ? $artikels->perPage() : 5;
-                    @endphp
-
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
@@ -68,11 +63,11 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                                            <a href="{{ route('artikels.edit', $artikel->id) }}"
+                                            <a href="{{ route('artikels.edit', $artikel->slug) }}"
                                                 class="border border-green-600 text-green-600 px-4 py-2 rounded-lg shadow hover:bg-green-600 hover:text-white text-sm transition">
                                                 Edit
                                             </a>
-                                            <form action="{{ route('artikels.delete', $artikel->id) }}" method="POST"
+                                            <form action="{{ route('artikels.delete', $artikel->slug) }}" method="POST"
                                                 class="inline-block"
                                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus artikel ini?')">
                                                 @csrf
