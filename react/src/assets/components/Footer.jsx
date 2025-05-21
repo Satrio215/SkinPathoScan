@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -53,12 +54,12 @@ const Footer = () => {
 
                 {/* Right Section */}
                 <div>
-                    <a
-                        href="#about"
+                    <Link
+                        to="/ourteam"
                         className="text-sm hover:underline font-semibold"
                     >
-                        About Us
-                    </a>
+                        Our Team
+                    </Link>
                 </div>
             </div>
 
