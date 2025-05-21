@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const ArtikelDetail = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
     const [artikel, setArtikel] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const ArtikelDetail = () => {
 
             try {
                 const response = await axios.get(
-                    `https://qwerty.satrio.io/api/articles/${id}`,
+                    `https://qwerty.satrio.io/api/articles/${slug}`,
                 );
                 setArtikel(response.data.data);
             } catch (error) {
@@ -31,7 +31,7 @@ const ArtikelDetail = () => {
         };
 
         fetchArtikel();
-    }, [id]);
+    }, [slug]);
 
     // Render content with paragraph breaks
     const renderContent = (content) => {

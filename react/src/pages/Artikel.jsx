@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Loader2, AlertCircle } from "lucide-react";
+import Button from "../assets/components/Button";
 
 const Artikel = () => {
     const [artikels, setArtikels] = useState([]);
@@ -68,11 +69,11 @@ const Artikel = () => {
                 <ErrorState />
             ) : (
                 <>
-                    <div className="space-y-8 max-w-5xl mx-auto">
+                    <div className="space-y-12 max-w-7xl mx-auto rounded-3xl">
                         {artikels.map((artikel) => (
                             <div
                                 key={artikel.id}
-                                className="bg-white rounded-xl shadow-md flex flex-col md:flex-row overflow-hidden"
+                                className="flex flex-col md:flex-row gap-6 border-b border-gray-200 pb-6 bg-white px-12 h-full py-12 rounded-3xl"
                             >
                                 <img
                                     src={`https://qwerty.satrio.io/public/${artikel.gambar}`}
@@ -82,26 +83,24 @@ const Artikel = () => {
                                         e.target.src =
                                             "https://via.placeholder.com/300x200?text=Gambar+Tidak+Tersedia";
                                     }}
-                                    className="w-full md:w-64 h-56 object-cover"
+                                    className="w-80 md:w-[400px] h-80 object-cover rounded shrink-0"
                                 />
-                                <div className="p-6 flex flex-col justify-between w-full">
-                                    <div>
-                                        <h2 className="text-2xl font-semibold text-gray-800 mb-3 break-words">
-                                            {artikel.judul}
-                                        </h2>
-                                        <p className="text-gray-600 mb-4 line-clamp-4 break-all">
-                                            {artikel.bio
-                                                ? artikel.bio.slice(0, 200) +
-                                                  "..."
-                                                : "Tidak ada deskripsi"}
-                                        </p>
-                                    </div>
-                                    <div className="flex justify-center mt-4">
-                                        <Link
-                                            to={`/artikel/${artikel.id}`}
-                                            className="inline-block px-5 py-2 bg-blue-800 text-white rounded-md font-semibold hover:bg-blue-900 transition"
-                                        >
-                                            Selengkapnya
+                                <div className="p-4 flex flex-col justify-between w-full overflow-hidden">
+                                    <h2 className="text-3xl font-bold text-gray-800 my-4 break-words">
+                                        {artikel.judul}
+                                    </h2>
+
+                                    <p className="text-gray-600 break-words leading-6 text-base">
+                                        {artikel.bio
+                                            ? artikel.bio.slice(0, 300) +
+                                              (artikel.bio.length > 200
+                                                  ? "..."
+                                                  : "")
+                                            : "Tidak ada deskripsi"}
+                                    </p>
+                                    <div className="mx-auto mt-auto">
+                                        <Link to={`/artikel/${artikel.slug}`}>
+                                            <Button>Selengkapnya</Button>
                                         </Link>
                                     </div>
                                 </div>

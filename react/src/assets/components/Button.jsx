@@ -32,8 +32,8 @@ const Button = ({
 
     return (
         <Ripples
-            during={800}
-            color="rgba(255, 255, 255, 0.3)"
+            during={1000}
+            color="rgba(30, 58, 138, 0.9)"
             className={
                 fullWidth ? "w-full rounded-lg" : "inline-block rounded-lg"
             }

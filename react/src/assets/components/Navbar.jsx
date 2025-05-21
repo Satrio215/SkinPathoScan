@@ -29,8 +29,8 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    <Link to="/about" className="hover:underline">
-                        About Us
+                    <Link to="/ourteam" className="hover:underline">
+                        Our Team
                     </Link>
                 </nav>
 
@@ -72,8 +72,8 @@ const Navbar = () => {
                         </div>
                     </details>
 
-                    <Link to="/about" className="hover:underline">
-                        About Us
+                    <Link to="/ourteam" className="hover:underline">
+                        Our Team
                     </Link>
                 </nav>
             )}

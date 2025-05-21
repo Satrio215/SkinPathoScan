@@ -14,7 +14,7 @@ const AboutUs = () => {
             </motion.h1>
 
             <motion.div
-                className="my-20 flex justify-center"
+                className="my-10 flex justify-center"
                 initial={{ opacity: 0, y: 50, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeInOut" }}
