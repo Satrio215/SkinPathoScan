@@ -6,6 +6,7 @@ import ArtikelDetail from "./pages/ArtikelDetail.jsx";
 import Ganas from "./pages/Ganas.jsx";
 import TidakGanas from "./pages/TidakGanas.jsx";
 import DefaultLayout from "./assets/components/DefaultLayout.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
 
 function App() {
     return (
@@ -14,9 +15,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/artikel" element={<Artikel />} />
-                    <Route path="/artikel/:id" element={<ArtikelDetail />} />
+                    <Route path="/artikel/:slug" element={<ArtikelDetail />} />
                     <Route path="/ganas" element={<Ganas />} />
                     <Route path="/tidak-ganas" element={<TidakGanas />} />
+                    <Route path="/ourteam" element={<AboutUs />} />
                 </Routes>
             </DefaultLayout>
         </Router>

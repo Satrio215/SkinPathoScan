@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Loader2, AlertCircle } from "lucide-react";
+import Button from "../assets/components/Button";
+import { motion } from "framer-motion";
 
 const Artikel = () => {
     const [artikels, setArtikels] = useState([]);
@@ -55,7 +57,15 @@ const Artikel = () => {
     );
 
     return (
-        <div className="py-12 px-4">
+        <div
+            className="py-12 px-4"
+            style={{
+                backgroundImage: 'url("/bg-kanker.png")',
+                backgroundSize: "50%",
+                backgroundRepeat: "repeat",
+                backgroundPosition: "top left",
+            }}
+        >
             <div className="max-w-5xl mx-auto mb-10">
                 <h1 className="text-4xl font-bold text-white">
                     Artikel SkinPathoScan
@@ -68,11 +78,14 @@ const Artikel = () => {
                 <ErrorState />
             ) : (
                 <>
-                    <div className="space-y-8 max-w-5xl mx-auto">
+                    <div className="space-y-12 max-w-7xl mx-auto rounded-3xl">
                         {artikels.map((artikel) => (
-                            <div
+                            <motion.div
                                 key={artikel.id}
-                                className="bg-white rounded-xl shadow-md flex flex-col md:flex-row overflow-hidden"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="flex flex-col md:flex-row gap-6 border-b border-gray-200 pb-6 bg-white px-12 h-full py-12 rounded-3xl"
                             >
                                 <img
                                     src={`https://qwerty.satrio.io/public/${artikel.gambar}`}
@@ -82,30 +95,36 @@ const Artikel = () => {
                                         e.target.src =
                                             "https://via.placeholder.com/300x200?text=Gambar+Tidak+Tersedia";
                                     }}
-                                    className="w-full md:w-64 h-56 object-cover"
+                                    className="w-60 h-60 md:w-[400px] md:h-80 object-cover rounded shrink-0"
                                 />
-                                <div className="p-6 flex flex-col justify-between w-full">
-                                    <div>
-                                        <h2 className="text-2xl font-semibold text-gray-800 mb-3 break-words">
-                                            {artikel.judul}
-                                        </h2>
-                                        <p className="text-gray-600 mb-4 line-clamp-4 break-all">
-                                            {artikel.bio
-                                                ? artikel.bio.slice(0, 200) +
-                                                  "..."
-                                                : "Tidak ada deskripsi"}
-                                        </p>
-                                    </div>
-                                    <div className="flex justify-center mt-4">
-                                        <Link
-                                            to={`/artikel/${artikel.id}`}
-                                            className="inline-block px-5 py-2 bg-blue-800 text-white rounded-md font-semibold hover:bg-blue-900 transition"
-                                        >
-                                            Selengkapnya
+                                <div className="p-4 flex flex-col justify-between w-full overflow-hidden">
+                                    <h2 className="text-3xl font-bold text-gray-800 my-4 break-words">
+                                        {artikel.judul}
+                                    </h2>
+                                    <p className="text-gray-600 break-words leading-6 text-base md:hidden">
+                                        {artikel.bio
+                                            ? artikel.bio.slice(0, 50) +
+                                              (artikel.bio.length > 50
+                                                  ? "..."
+                                                  : "")
+                                            : "Tidak ada deskripsi"}
+                                    </p>
+                                    {/* Desktop: md = >=768px */}
+                                    <p className="text-gray-600 break-words leading-6 text-base hidden md:block">
+                                        {artikel.bio
+                                            ? artikel.bio.slice(0, 300) +
+                                              (artikel.bio.length > 300
+                                                  ? "..."
+                                                  : "")
+                                            : "Tidak ada deskripsi"}
+                                    </p>{" "}
+                                    <div className="mx-auto mt-auto pt-4">
+                                        <Link to={`/artikel/${artikel.slug}`}>
+                                            <Button>Selengkapnya</Button>
                                         </Link>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
