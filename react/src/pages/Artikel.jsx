@@ -58,7 +58,7 @@ const Artikel = () => {
 
     return (
         <div
-            className="py-12 px-4"
+            className="min-h-screen py-12 px-4"
             style={{
                 backgroundImage: 'url("/bg-kanker.png")',
                 backgroundSize: "50%",
