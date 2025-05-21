@@ -173,7 +173,7 @@ const ImageAnalyzer = () => {
                         <div className="text-center  p-4 bg-white border rounded-2xl text-gray-700 flex flex-col justify-end h-full relative">
                             {/* Bubble Chat */}
                             {showBubble && (
-                                <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base">
+                                <div className="relative bg-blue-100 text-blue-900 p-3 rounded-xl max-w-xs text-sm md:text-base ms-24">
                                     <p className="font-semibold">
                                         {bubbleMessage}
                                     </p>
@@ -183,10 +183,10 @@ const ImageAnalyzer = () => {
 
                             {/* Maskot Gajah */}
                             {showGajah && (
-                                <div className="ms-36" ref={gajahRef}>
+                                <div className="ms-60" ref={gajahRef}>
                                     <img
                                         src="/Gajah.webp"
-                                        className="w-40 h-40 mt-6"
+                                        className="w-36 h-36 mt-6"
                                         alt="Gajah"
                                     />
                                 </div>
