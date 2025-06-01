@@ -29,7 +29,7 @@ jobs:
 
       - name: Create .htaccess for React SPA
         run: |
-          cat <<EOF > ./react/dist/.htaccess
+          cat <<EOF > ./react/.htaccess
           <IfModule mod_rewrite.c>
             RewriteEngine On
             RewriteBase /
@@ -40,7 +40,7 @@ jobs:
           </IfModule>
           EOF
 
-      - name: Upload React build to FTP public_html
+      - name: Upload full React folder to FTP public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
-          local-dir: ./react/dist/
+          local-dir: ./react/
           server-dir: /public_html/
