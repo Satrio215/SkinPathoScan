@@ -27,12 +27,13 @@ jobs:
         run: npm run build
         working-directory: ./react
 
-      - name: Deploy via SFTP
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          host: ${{ secrets.FTP_HOST }}
-          port: 21
+          server: ${{ secrets.FTP_HOST }}       # ✅ Ganti dari `host` ke `server`
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: ./react/dist
-          remoteDir: public_html
+          port: 21                               # Optional, default 21
+          protocol: ftp                          # Default, tapi bisa eksplisit
+          local-dir: ./react/dist/               # ✅ Ganti dari `localDir` ke `local-dir`
+          server-dir: public_html/               # ✅ Ganti dari `remoteDir` ke `server-dir`
