@@ -40,11 +40,8 @@ jobs:
           </IfModule>
           EOF
 
-      - name: Prepare public_html folder
-        run: |
-          mkdir public_html
-          cp -r ./react/dist/* ./public_html/
-          cp ./react/dist/.htaccess ./public_html/.htaccess
+      - name: Copy build output to project root (for direct upload)
+        run: cp -r ./react/dist/* . && cp ./react/dist/.htaccess ./
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -54,5 +51,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
-          local-dir: ./public_html/
-          server-dir: public_html/
+          local-dir: ./
+          server-dir: /
