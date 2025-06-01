@@ -1,4 +1,4 @@
-name: 🚀 Deploy React App to Niagahoster FTP
+name: 🚀 Deploy React App (Vite) to Niagahoster FTP
 
 on:
   push:
@@ -23,13 +23,13 @@ jobs:
         run: npm ci
         working-directory: ./react
 
-      - name: Build React App
+      - name: Build React App (Vite)
         run: npm run build
         working-directory: ./react
 
-      - name: Create .htaccess for React SPA
+      - name: Create .htaccess for Vite SPA
         run: |
-          cat <<EOF > ./react/.htaccess
+          cat <<EOF > ./react/dist/.htaccess
           <IfModule mod_rewrite.c>
             RewriteEngine On
             RewriteBase /
@@ -40,7 +40,7 @@ jobs:
           </IfModule>
           EOF
 
-      - name: Upload full React folder to FTP public_html
+      - name: Upload ONLY build output to FTP public_html
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -48,5 +48,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftp
-          local-dir: ./react/
+          local-dir: ./react/dist/
           server-dir: /public_html/
