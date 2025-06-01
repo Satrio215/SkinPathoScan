@@ -27,11 +27,12 @@ jobs:
         run: npm run build
         working-directory: ./react
 
-      - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via SFTP
+        uses: pressidium/lftp-mirror-action@v1.2
         with:
-          server: 145.223.108.28
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./react/dist/
-          server-dir: public_html/
+          host: ${{ secrets.SFTP_HOST }}
+          port: 21
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          localDir: ./react/dist
+          remoteDir: public_html
