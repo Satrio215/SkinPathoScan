@@ -1,34 +1,37 @@
-name: 🚀 Deploy React (in /react folder) to Niagahoster via FTP
+name: 🚀 Deploy React App to Niagahoster FTP
 
 on:
   push:
     branches:
-      - main  # Ubah ke branch utama kamu jika berbeda
+      - main
 
 jobs:
   deploy:
+    name: Upload to FTP
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Install dependencies & Build React
-      working-directory: ./react
-      run: |
-        npm install
-        npm run build
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./react
 
-    - name: 📤 Deploy build/ via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_HOST }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: public_html/
-        local-dir: react/build/
+      - name: Build React project
+        run: npm run build
+        working-directory: ./react
+
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ftp://145.223.108.28
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./react/dist
+          server-dir: public_html/
