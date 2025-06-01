@@ -8,7 +8,7 @@ const HeroSection = () => {
                 <div>
                     <h2 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
                         Hello, Welcome to <br />
-                        <span className="text-white">SkinPathoScan</span>
+                        <span className="text-white">SkinPathoScan Automasi</span>
                     </h2>
                     <p className="text-base md:text-lg text-white/90 leading-relaxed">
                         Membantu Anda mendeteksi kanker kulit sejak dini dengan
